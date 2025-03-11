@@ -9,7 +9,7 @@ namespace SALESbe.Controllers
     public class ProductController : Controller
     {
         [HttpGet]
-        [Route("/[action]")]
+        [Route("GetProducts")]
         [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
