@@ -1,4 +1,4 @@
-﻿namespace SALESbe.Models
+﻿namespace Api.Sales.Models
 {
     public class RequestPurchaseDto
     {

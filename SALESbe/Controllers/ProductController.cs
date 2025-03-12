@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SALESbe.Models;
+﻿using Api.Sales.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace SALESbe.Controllers
+namespace Api.Sales.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,78 +16,78 @@ namespace SALESbe.Controllers
         public IActionResult GetProducts()
         {
 
-            List<Product> response = new ();
+            List<Product> response = new();
 
             //Input 1
-            var book = new Product(1, 0, "book", 12.49, 0, true, false)
+            var book = new Product(1, 0, "Book", 12.49, 0, true, false)
             {
-                Name = "book",
+                Name = "Book",
                 ItemPrice = 12.49,
                 IsExempt = true,
                 IsExported = false,
             };
 
-            var musicCd = new Product(2, 0, "musicCd", 14.99, 0, false, false)
+            var musicCd = new Product(2, 0, "Music CD", 14.99, 0, false, false)
             {
-                Name = "musicCd",
+                Name = "Music CD",
                 ItemPrice = 14.99,
                 IsExempt = false,
                 IsExported = false,
             };
 
-            var chocolateBar = new Product(3, 0, "chocolateBar", 0.85, 0, true, false)
+            var chocolateBar = new Product(3, 0, "Chocolate bar", 0.85, 0, true, false)
             {
-                Name = "chocolateBar",
+                Name = "Chocolate bar",
                 ItemPrice = 0.85,
                 IsExempt = true,
                 IsExported = false,
             };
 
             //Input 2
-            var cheaperImportedChocolateBox = new Product(4, 0, "cheaperImportedChocolateBox", 10.00, 0, true, true)
+            var cheaperImportedChocolateBox = new Product(4, 0, "Imported box of chocolates", 10.00, 0, true, true)
             {
-                Name = "cheaperImportedChocolateBox",
+                Name = "Imported box of chocolates",
                 ItemPrice = 10.00,
                 IsExempt = true,
                 IsExported = true,
             };
 
-            var importedPerfumeBottle = new Product(5, 0, "importedPerfumeBottle", 47.50, 0, false, true)
+            var importedPerfumeBottle = new Product(5, 0, "Imported bottle of perfume", 47.50, 0, false, true)
             {
-                Name = "importedPerfumeBottle",
+                Name = "Imported bottle of perfume",
                 ItemPrice = 47.50,
                 IsExempt = false,
                 IsExported = true,
             };
 
             //Input 3
-            var cheaperImportedPerfumeBottle = new Product(6, 0, "cheaperImportedPerfumeBottle", 27.99, 0, false, true)
+            var cheaperImportedPerfumeBottle = new Product(6, 0, "Imported bottle of perfume", 27.99, 0, false, true)
             {
-                Name = "cheaperImportedPerfumeBottle",
+                Name = "Imported bottle of perfume",
                 ItemPrice = 27.99,
                 IsExempt = false,
                 IsExported = true,
             };
 
-            var perfumeBottle = new Product(7, 0, "perfumeBottle", 18.99, 0, false, false)
+            var perfumeBottle = new Product(7, 0, "Bottle of perfume", 18.99, 0, false, false)
             {
-                Name = "perfumeBottle",
+                Name = "Bottle of perfume",
                 ItemPrice = 18.99,
                 IsExempt = false,
                 IsExported = false,
             };
 
-            var headachePills = new Product(8, 0, "headachePills", 9.75, 0, true, false)
+            var headachePills = new Product(8, 0, "Packet of headache pills", 9.75, 0, true, false)
             {
-                Name = "headachePills",
+                Name = "Packet of headache pills",
                 ItemPrice = 9.75,
                 IsExempt = true,
                 IsExported = false,
             };
 
-            var importedChocolateBox = new Product(9, 0, "importedChocolateBox", 11.25, 0, true, true)
+            var importedChocolateBox = new Product(9, 0, "Box of imported chocolates", 11.25, 0, true, true)
             {
-                Name = "importedChocolateBox",
+                Name = "Box of imported chocolates",
                 ItemPrice = 11.25,
                 IsExempt = true,
                 IsExported = false,
