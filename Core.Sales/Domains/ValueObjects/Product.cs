@@ -1,4 +1,4 @@
-﻿namespace Api.Sales.Models
+﻿namespace Core.Sales.Domains.ValueObjects
 {
     public class Product
     {

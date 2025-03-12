@@ -1,4 +1,6 @@
-﻿namespace Api.Sales.Models
+﻿using Api.Sales.Models.ValueObjects;
+
+namespace Api.Sales.Models
 {
     public class ResponsePurchaseDto
     {

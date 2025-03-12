@@ -1,4 +1,4 @@
-﻿using Api.Sales.Models;
+﻿using Api.Sales.Models.DTOs.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -10,16 +10,15 @@ namespace Api.Sales.Controllers
     {
         [HttpGet]
         [Route("GetProducts")]
-        [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ResponseProductDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult GetProducts()
         {
-
-            List<Product> response = new();
+            List<ResponseProductDto> response = new();
 
             //Input 1
-            var book = new Product(1, 0, "Book", 12.49, 0, true, false)
+            var book = new ResponseProductDto(1, "Book", 12.49, true, false)
             {
                 Name = "Book",
                 ItemPrice = 12.49,
@@ -27,7 +26,7 @@ namespace Api.Sales.Controllers
                 IsExported = false,
             };
 
-            var musicCd = new Product(2, 0, "Music CD", 14.99, 0, false, false)
+            var musicCd = new ResponseProductDto(2, "Music CD", 14.99, false, false)
             {
                 Name = "Music CD",
                 ItemPrice = 14.99,
@@ -35,7 +34,7 @@ namespace Api.Sales.Controllers
                 IsExported = false,
             };
 
-            var chocolateBar = new Product(3, 0, "Chocolate bar", 0.85, 0, true, false)
+            var chocolateBar = new ResponseProductDto(3, "Chocolate bar", 0.85, true, false)
             {
                 Name = "Chocolate bar",
                 ItemPrice = 0.85,
@@ -44,7 +43,7 @@ namespace Api.Sales.Controllers
             };
 
             //Input 2
-            var cheaperImportedChocolateBox = new Product(4, 0, "Imported box of chocolates", 10.00, 0, true, true)
+            var cheaperImportedChocolateBox = new ResponseProductDto(4, "Imported box of chocolates", 10.00, true, true)
             {
                 Name = "Imported box of chocolates",
                 ItemPrice = 10.00,
@@ -52,7 +51,7 @@ namespace Api.Sales.Controllers
                 IsExported = true,
             };
 
-            var importedPerfumeBottle = new Product(5, 0, "Imported bottle of perfume", 47.50, 0, false, true)
+            var importedPerfumeBottle = new ResponseProductDto(5, "Imported bottle of perfume", 47.50, false, true)
             {
                 Name = "Imported bottle of perfume",
                 ItemPrice = 47.50,
@@ -61,7 +60,7 @@ namespace Api.Sales.Controllers
             };
 
             //Input 3
-            var cheaperImportedPerfumeBottle = new Product(6, 0, "Imported bottle of perfume", 27.99, 0, false, true)
+            var cheaperImportedPerfumeBottle = new ResponseProductDto(6, "Imported bottle of perfume", 27.99, false, true)
             {
                 Name = "Imported bottle of perfume",
                 ItemPrice = 27.99,
@@ -69,7 +68,7 @@ namespace Api.Sales.Controllers
                 IsExported = true,
             };
 
-            var perfumeBottle = new Product(7, 0, "Bottle of perfume", 18.99, 0, false, false)
+            var perfumeBottle = new ResponseProductDto(7, "Bottle of perfume", 18.99, false, false)
             {
                 Name = "Bottle of perfume",
                 ItemPrice = 18.99,
@@ -77,7 +76,7 @@ namespace Api.Sales.Controllers
                 IsExported = false,
             };
 
-            var headachePills = new Product(8, 0, "Packet of headache pills", 9.75, 0, true, false)
+            var headachePills = new ResponseProductDto(8, "Packet of headache pills", 9.75, true, false)
             {
                 Name = "Packet of headache pills",
                 ItemPrice = 9.75,
@@ -85,7 +84,7 @@ namespace Api.Sales.Controllers
                 IsExported = false,
             };
 
-            var importedChocolateBox = new Product(9, 0, "Box of imported chocolates", 11.25, 0, true, true)
+            var importedChocolateBox = new ResponseProductDto(9, "Box of imported chocolates", 11.25, true, true)
             {
                 Name = "Box of imported chocolates",
                 ItemPrice = 11.25,
@@ -104,7 +103,6 @@ namespace Api.Sales.Controllers
             response.Add(perfumeBottle);
             response.Add(headachePills);
             response.Add(importedChocolateBox);
-
 
             return Ok(response);
         }
