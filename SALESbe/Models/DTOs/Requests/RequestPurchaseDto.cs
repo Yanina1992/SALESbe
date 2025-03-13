@@ -4,6 +4,7 @@ namespace Api.Sales.Models.DTOs.Requests
 {
     public class RequestPurchaseDto
     {
+        public int PurchaseId { get; set; }
         public List<Product>? CartProducts { get; set; }
         public double TotalAmount { get; set; }
     }
