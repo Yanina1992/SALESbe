@@ -10,12 +10,12 @@ namespace SALESbe.Controllers
     public class PurchaseController : ControllerBase
     {
         [HttpGet]
-        [Route("/[action]")]
+        [Route("GetPurchase")]
         [ProducesResponseType(typeof(List<ResponsePurchaseDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
 
-        public IActionResult GetPurchase([FromQuery] string ?purchaseId)
+        public IActionResult GetPurchases([FromQuery] string ?purchaseId)
         {
             List<ResponsePurchaseDto> response = new();
 
@@ -31,35 +31,27 @@ namespace SALESbe.Controllers
     
         }
 
-    }
-}
+        [HttpPost]
+        [Route("InsertPurchase")]
+        [ProducesResponseType(typeof(List<RequestPurchaseDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
 
+        public IActionResult InsertPurchase([FromBody] RequestPurchaseDto request)
+        {
+            List<ResponsePurchaseDto> response = new();
 
-/**
- 
- try
+            try
             {
-                var query = new GetAlimentazioneQuery(0, 500, "ASC", "NomeAlimentazione", simpleFilter: nomeAlimentazione);
-                var result = await _mediator.Send(query);
-                if (result != null)
-                {
-                    if (result.Alimentazioni != null)
-                    {
-                        responses = result.Alimentazioni.Select(m => new ResponseAutocompleteDto
-                        {
-                            Value = m.IdAlimentazione,
-                            Name = m.NomeAlimentazione
-                        }
-                        ).ToList();
-                    }
-                }
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
                 return StatusCode(500, ex.Message);
-
             }
-            return Ok(responses);
+            return Ok(response);
 
- */
+        }
+
+    }
+}
