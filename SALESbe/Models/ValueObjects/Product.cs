@@ -10,6 +10,8 @@
         public required bool IsExempt { get; set; }
         public required bool IsExported { get; set; }
 
+        public Product() { }
+
         public Product(int productId, int quantity, string name, double itemPrice, double totalPrice, bool isExempt, bool isExported)
         {
             ProductId = productId;

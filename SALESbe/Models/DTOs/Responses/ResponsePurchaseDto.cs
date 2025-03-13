@@ -1,6 +1,6 @@
 ﻿using Api.Sales.Models.ValueObjects;
 
-namespace Api.Sales.Models
+namespace Api.Sales.Models.DTOs.Responses
 {
     public class ResponsePurchaseDto
     {
