@@ -6,7 +6,7 @@ namespace Api.Sales.Models.DTOs.Responses
     {
         public required int PurchaseId { get; set; }
         public required List<Product>? Products { get; set; }
-        public required double SalesTaxes { get; set; }
-        public required double Total { get; set; }
+        public required decimal SalesTaxes { get; set; }
+        public required decimal Total { get; set; }
     }
 }

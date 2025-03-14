@@ -22,10 +22,9 @@ namespace SALESbe.Controllers
 
         public IActionResult GetPurchase([FromQuery] string ?purchaseId)
         {
-
             ResponsePurchaseDto response;
 
-            double sumDifferentTaxes = 0;
+            decimal sumDifferentTaxes = 0;
             
 
             try
@@ -50,22 +49,25 @@ namespace SALESbe.Controllers
                     foreach (var product in products)
                     {
 
-                        double isNotExemptItemTaxesToAdd = 0;
-                        double isExportedTaxesToAdd = 0;
+                        decimal isNotExemptItemTaxesToAdd = 0;
+                        decimal isExportedTaxesToAdd = 0;
 
                         if (!product.IsExempt)
                         {
+                            product.TotalPrice = 0;
+
                             var basicSaleTaxe = (product.ItemPrice * 10) / 100;
 
-                            this.RoundNumbersUp(basicSaleTaxe);
-                            isNotExemptItemTaxesToAdd = basicSaleTaxe;
+                            var roundedBasicSaleTaxe = this.RoundNumbersUp(basicSaleTaxe);
+                            isNotExemptItemTaxesToAdd = roundedBasicSaleTaxe;
                             sumDifferentTaxes += isNotExemptItemTaxesToAdd;
 
-                            product.TotalPrice += (sumDifferentTaxes * product.Quantity);
+                            product.TotalPrice = (sumDifferentTaxes * product.Quantity + product.ItemPrice * product.Quantity);
                         }
 
                         if (product.IsExported)
                         {
+                            product.TotalPrice = 0;
  
                             var importDuty = (product.ItemPrice * 5) / 100;
 
@@ -73,7 +75,8 @@ namespace SALESbe.Controllers
                             isExportedTaxesToAdd = importDuty;
                             sumDifferentTaxes += isExportedTaxesToAdd;
 
-                            product.TotalPrice += (sumDifferentTaxes * product.Quantity);
+                            //product.TotalPrice += (sumDifferentTaxes * product.Quantity);
+                            product.TotalPrice = (sumDifferentTaxes * product.Quantity + product.ItemPrice * product.Quantity);
                         }
 
                     }
@@ -128,7 +131,7 @@ namespace SALESbe.Controllers
         }
 
 
-        private double RoundNumbersUp(double numberToRound)
+        private decimal RoundNumbersUp(decimal numberToRound)
         {
             //numberToRound > input ************ //numberToReturn > output
 
@@ -149,16 +152,16 @@ namespace SALESbe.Controllers
 
                     var secondNumberAfterComma = numbersAfterComma[1];
 
-                    var convertedFirstNumberAfterComma = double.Parse(firstNumberAfterComma.ToString());
+                    var convertedFirstNumberAfterComma = decimal.Parse(firstNumberAfterComma.ToString());
 
-                    var convertedSecondNumberAfterComma = double.Parse(secondNumberAfterComma.ToString());
+                    var convertedSecondNumberAfterComma = decimal.Parse(secondNumberAfterComma.ToString());
 
                     if (convertedFirstNumberAfterComma <= 4 && convertedSecondNumberAfterComma >= 9)
                     {
                         var roundedNumber = 5;
 
-                        string recomposedNumber = numbersBeforeComma + numbersAfterComma[0] + roundedNumber;
-                        double parsedRecomposedNumber = Convert.ToDouble(recomposedNumber);
+                        string recomposedNumber = numbersBeforeComma + ',' + roundedNumber;
+                        decimal parsedRecomposedNumber = Convert.ToDecimal(recomposedNumber);
 
                         return parsedRecomposedNumber;
                     }
@@ -181,7 +184,7 @@ namespace SALESbe.Controllers
                 //1 number after comma
                 if (numbersAfterComma.Length == 1)
                 {
-                    var parsedNumbersAfterComma = Convert.ToDouble(numbersAfterComma);
+                    var parsedNumbersAfterComma = Convert.ToDecimal(numbersAfterComma);
 
                     //If first number after comma < 5 it becomes == 5
                     if (parsedNumbersAfterComma <= 5)
@@ -189,14 +192,14 @@ namespace SALESbe.Controllers
                         string numberToReturn = Convert.ToString(numbersBeforeComma);
                         numberToReturn = numbersBeforeComma + ",5";
 
-                        return Convert.ToDouble(numberToReturn);
+                        return Convert.ToDecimal(numberToReturn);
                     }
                     //If first number after comma > 5 it will be rounded up by Math.Ceiling
                     else
                     {
                         var numberToReturn = (int)Math.Ceiling(numberToRound);
 
-                        return Convert.ToDouble(numberToReturn);
+                        return Convert.ToDecimal(numberToReturn);
                     }
                 }          
 

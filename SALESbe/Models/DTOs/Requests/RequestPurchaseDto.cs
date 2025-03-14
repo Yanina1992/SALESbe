@@ -6,6 +6,6 @@ namespace Api.Sales.Models.DTOs.Requests
     {
         public int PurchaseId { get; set; }
         public List<Product>? CartProducts { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }
