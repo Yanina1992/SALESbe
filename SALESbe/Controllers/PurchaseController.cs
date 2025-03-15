@@ -20,12 +20,12 @@ namespace SALESbe.Controllers
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
 
-        public IActionResult GetPurchase([FromQuery] string ?purchaseId)
+        public IActionResult GetPurchase([FromQuery] string? purchaseId)
         {
             ResponsePurchaseDto response;
 
             decimal sumDifferentTaxes = 0;
-            
+
 
             try
             {
@@ -68,7 +68,7 @@ namespace SALESbe.Controllers
                         if (product.IsExported)
                         {
                             product.TotalPrice = 0;
- 
+
                             var importDuty = (product.ItemPrice * 5) / 100;
 
                             this.RoundNumbersUp(importDuty);
@@ -81,24 +81,24 @@ namespace SALESbe.Controllers
 
                     }
 
-                       var purchaseSaleTaxRounded = this.RoundNumbersUp(sumDifferentTaxes);
-                       response.SalesTaxes = purchaseSaleTaxRounded;
-                       response.Total = purchaseSaleTaxRounded;
+                    var purchaseSaleTaxRounded = this.RoundNumbersUp(sumDifferentTaxes);
+                    response.SalesTaxes = purchaseSaleTaxRounded;
+                    response.Total = purchaseSaleTaxRounded;
 
-                        
+
                 }
 
-                 response.SalesTaxes = sumDifferentTaxes;
-                 response.Total = PurchaseController.Purchase.TotalAmount + sumDifferentTaxes;
-                
-                
+                response.SalesTaxes = sumDifferentTaxes;
+                response.Total = PurchaseController.Purchase.TotalAmount + sumDifferentTaxes;
+
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
             return Ok(response);
-    
+
         }
 
         [HttpPost]
@@ -136,7 +136,8 @@ namespace SALESbe.Controllers
             //numberToRound > input ************ //numberToReturn > output
 
             //Handle numbers with comma
-            if (numberToRound.ToString().Length > 2) {
+            if (numberToRound.ToString().Length > 2)
+            {
 
                 var splittedNumber = numberToRound.ToString().Split(',');
 
@@ -201,7 +202,7 @@ namespace SALESbe.Controllers
 
                         return Convert.ToDecimal(numberToReturn);
                     }
-                }          
+                }
 
             }
             //Numbers without comma
