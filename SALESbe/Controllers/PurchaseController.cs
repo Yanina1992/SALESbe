@@ -1,7 +1,5 @@
 ﻿using Api.Sales.Models.DTOs.Requests;
 using Api.Sales.Models.DTOs.Responses;
-using Api.Sales.Models.ValueObjects;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -50,9 +48,9 @@ namespace SALESbe.Controllers
                     {
 
                         decimal isNotExemptItemTaxesToAdd = 0;
-                        decimal isExportedTaxesToAdd = 0;
+                        decimal isImportedTaxesToAdd = 0;
 
-                        if (!product.IsExempt)
+                        if (!product.IsExempt && !product.IsImported)
                         {
                             product.TotalPrice = 0;
 
@@ -60,31 +58,35 @@ namespace SALESbe.Controllers
 
                             var roundedBasicSaleTaxe = this.RoundNumbersUp(basicSaleTaxe);
                             isNotExemptItemTaxesToAdd = roundedBasicSaleTaxe;
-                            sumDifferentTaxes += isNotExemptItemTaxesToAdd;
+                            //
+                            sumDifferentTaxes += Convert.ToDecimal(isNotExemptItemTaxesToAdd * product.Quantity);
 
-                            product.TotalPrice = (sumDifferentTaxes * product.Quantity + product.ItemPrice * product.Quantity);
+                            product.TotalPrice = (isNotExemptItemTaxesToAdd * product.Quantity + product.ItemPrice * product.Quantity);
                         }
 
-                        if (product.IsExported)
+                        if (product.IsImported && product.IsExempt)
                         {
                             product.TotalPrice = 0;
 
                             var importDuty = (product.ItemPrice * 5) / 100;
+                            var roundedImportDuty = this.RoundNumbersUp(importDuty);
+                            isImportedTaxesToAdd = roundedImportDuty;
+                            sumDifferentTaxes += Convert.ToDecimal(isImportedTaxesToAdd * product.Quantity);
 
-                            this.RoundNumbersUp(importDuty);
-                            isExportedTaxesToAdd = importDuty;
-                            sumDifferentTaxes += isExportedTaxesToAdd;
-
-                            //product.TotalPrice += (sumDifferentTaxes * product.Quantity);
-                            product.TotalPrice = (sumDifferentTaxes * product.Quantity + product.ItemPrice * product.Quantity);
+                            product.TotalPrice = (isImportedTaxesToAdd * product.Quantity + product.ItemPrice * product.Quantity);
                         }
 
+                        if (!product.IsExempt && product.IsImported) 
+                        {
+                            product.TotalPrice = 0;
+
+                            var allTaxes = (product.ItemPrice * 15) / 100;
+                            var allTaxesRounded = this.RoundNumbersUp(allTaxes);
+                            sumDifferentTaxes += Convert.ToDecimal(allTaxesRounded * product.Quantity);
+                            
+                            product.TotalPrice = (allTaxesRounded * product.Quantity + product.ItemPrice * product.Quantity);
+                        }
                     }
-
-                    var purchaseSaleTaxRounded = this.RoundNumbersUp(sumDifferentTaxes);
-                    response.SalesTaxes = purchaseSaleTaxRounded;
-                    response.Total = purchaseSaleTaxRounded;
-
 
                 }
 
@@ -133,7 +135,6 @@ namespace SALESbe.Controllers
 
         private decimal RoundNumbersUp(decimal numberToRound)
         {
-            //numberToRound > input ************ //numberToReturn > output
 
             //Handle numbers with comma
             if (numberToRound.ToString().Length > 2)
@@ -145,7 +146,7 @@ namespace SALESbe.Controllers
 
                 var numbersAfterComma = splittedNumber[1];
 
-                //2 numbers after comma
+                //2 numbers or more after comma
                 if (numbersAfterComma.Length > 1)
 
                 {
@@ -157,28 +158,34 @@ namespace SALESbe.Controllers
 
                     var convertedSecondNumberAfterComma = decimal.Parse(secondNumberAfterComma.ToString());
 
-                    if (convertedFirstNumberAfterComma <= 4 && convertedSecondNumberAfterComma >= 9)
+
+                    if(convertedSecondNumberAfterComma == 5)
                     {
-                        var roundedNumber = 5;
+                        string roundedNumber = numbersBeforeComma + ',' + convertedFirstNumberAfterComma + convertedSecondNumberAfterComma;
+                        decimal recomposedNumber = Convert.ToDecimal(roundedNumber);
 
-                        string recomposedNumber = numbersBeforeComma + ',' + roundedNumber;
-                        decimal parsedRecomposedNumber = Convert.ToDecimal(recomposedNumber);
-
-                        return parsedRecomposedNumber;
+                        return recomposedNumber;
                     }
-
-                    if (convertedFirstNumberAfterComma >= 5 && convertedSecondNumberAfterComma >= 1)
+                    if(convertedSecondNumberAfterComma < 5)
                     {
+                        convertedSecondNumberAfterComma = 5;
 
-                        var roundedNumber = (int)Math.Ceiling(numberToRound);
-
-                        return roundedNumber;
-
+                        string roundedNumber = numbersBeforeComma + ',' + convertedFirstNumberAfterComma + convertedSecondNumberAfterComma;
+                        decimal recomposedNumber = Convert.ToDecimal(roundedNumber);
+                        
+                        return recomposedNumber;
                     }
+                    if(convertedSecondNumberAfterComma > 5)
+                    {
+                        convertedSecondNumberAfterComma = 0;
+                        convertedFirstNumberAfterComma ++;
 
+                        string roundedNumber = numbersBeforeComma + ',' + convertedFirstNumberAfterComma + convertedSecondNumberAfterComma;
+                        decimal recomposedNumber = Convert.ToDecimal(roundedNumber);
+
+                        return recomposedNumber;
+                    }
                 }
-
-
 
 
 

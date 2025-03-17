@@ -23,7 +23,7 @@ namespace Api.Sales.Controllers
                 Name = "Book",
                 ItemPrice = 12.49m,
                 IsExempt = true,
-                IsExported = false,
+                IsImported = false,
             };
 
             var musicCd = new ResponseProductDto(2, "Music CD", 14.99m, false, false)
@@ -31,7 +31,7 @@ namespace Api.Sales.Controllers
                 Name = "Music CD",
                 ItemPrice = 14.99m,
                 IsExempt = false,
-                IsExported = false,
+                IsImported = false,
             };
 
             var chocolateBar = new ResponseProductDto(3, "Chocolate bar", 0.85m, true, false)
@@ -39,7 +39,7 @@ namespace Api.Sales.Controllers
                 Name = "Chocolate bar",
                 ItemPrice = 0.85m,
                 IsExempt = true,
-                IsExported = false,
+                IsImported = false,
             };
 
             //Input 2
@@ -48,7 +48,7 @@ namespace Api.Sales.Controllers
                 Name = "Imported box of chocolates",
                 ItemPrice = 10.00m,
                 IsExempt = true,
-                IsExported = true,
+                IsImported = true,
             };
 
             var importedPerfumeBottle = new ResponseProductDto(5, "Imported bottle of perfume", 47.50m, false, true)
@@ -56,7 +56,7 @@ namespace Api.Sales.Controllers
                 Name = "Imported bottle of perfume",
                 ItemPrice = 47.50m,
                 IsExempt = false,
-                IsExported = true,
+                IsImported = true,
             };
 
             //Input 3
@@ -65,7 +65,7 @@ namespace Api.Sales.Controllers
                 Name = "Imported bottle of perfume",
                 ItemPrice = 27.99m,
                 IsExempt = false,
-                IsExported = true,
+                IsImported = true,
             };
 
             var perfumeBottle = new ResponseProductDto(7, "Bottle of perfume", 18.99m, false, false)
@@ -73,7 +73,7 @@ namespace Api.Sales.Controllers
                 Name = "Bottle of perfume",
                 ItemPrice = 18.99m,
                 IsExempt = false,
-                IsExported = false,
+                IsImported = false,
             };
 
             var headachePills = new ResponseProductDto(8, "Packet of headache pills", 9.75m, true, false)
@@ -81,7 +81,7 @@ namespace Api.Sales.Controllers
                 Name = "Packet of headache pills",
                 ItemPrice = 9.75m,
                 IsExempt = true,
-                IsExported = false,
+                IsImported = false,
             };
 
             var importedChocolateBox = new ResponseProductDto(9, "Box of imported chocolates", 11.25m, true, true)
@@ -89,7 +89,7 @@ namespace Api.Sales.Controllers
                 Name = "Box of imported chocolates",
                 ItemPrice = 11.25m,
                 IsExempt = true,
-                IsExported = false,
+                IsImported = true,
             };
 
             response.Add(book);

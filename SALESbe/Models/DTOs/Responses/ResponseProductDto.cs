@@ -6,15 +6,15 @@
         public required string Name { get; set; }
         public required decimal ItemPrice { get; set; }
         public required bool IsExempt { get; set; }
-        public required bool IsExported { get; set; }
+        public required bool IsImported { get; set; }
 
-        public ResponseProductDto(int productId, string name, decimal itemPrice, bool isExempt, bool isExported)
+        public ResponseProductDto(int productId, string name, decimal itemPrice, bool isExempt, bool isImported)
         {
             ProductId = productId;
             Name = name;
             ItemPrice = itemPrice;
             IsExempt = isExempt;
-            IsExported = isExported;
+            IsImported = isImported;
         }
 
     }
